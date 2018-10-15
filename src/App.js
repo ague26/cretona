@@ -1,11 +1,39 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Grid , Row, Col, } from 'react-bootstrap';
+import {Grid , Row, Col} from 'react-bootstrap';
 import Scroll from 'react-scroll';
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import StripeCheckout from 'react-stripe-checkout';
+import Box from './box';
+import Button from './button';
 
 class App extends Component {
-  
+  constructor(props){
+    super(props);
+    this.state={
+      name:'',
+      email: '',
+      message:''
+    };
+    this.updateBox = this.updateBox.bind(this);
+  }
+
+  onToken = (token) => {
+    fetch('/save-stripe-token', {
+      method: 'POST',
+      body: JSON.stringify(token),
+    }).then(response => {
+      response.json().then(data => {
+        alert(`We are in business, ${data.email}`);
+      });
+    });
+  }
+
+  updateBox(box, value){
+    this.setState({[box]: value})
+  }
+
+
   render() {
 
 
@@ -60,7 +88,23 @@ class App extends Component {
             <Element id="contact" >
               <Col lg={2} xs={0}> </Col>
               <Col lg={8} xs={12}> 
-                <p> Contact Me </p> 
+                <Box 
+                  label="Name"
+                  onChange={(event) => this.updateBox('name', event.target.value)} 
+                  value={this.state.name} 
+                />
+                <Box 
+                  label="Email"
+                  onChange={(event) => this.updateBox('email', event.target.value)} 
+                  value={this.state.email} 
+                />
+                <Box 
+                  label="Message"
+                  textarea={true}
+                  onChange={(event) => this.updateBox('message', event.target.value)} 
+                  value={this.state.message} />
+                <Button formValues={this.state} email = "alexgue26@hotmail.com" 
+                />
               </Col>
               <Col lg={2} xs={0}></Col>
             </Element>
@@ -70,7 +114,11 @@ class App extends Component {
             <Element id="payment">
               <Col lg={2} xs={0}> </Col>
               <Col lg={8} xs={12}> 
-                <p> Payment</p> 
+                <StripeCheckout
+                  token={this.onToken}
+                  stripeKey="pk_test_TYooMQauvdEDq54NiTphI7jx"
+                />
+ 
               </Col>
               <Col lg={2} xs={0}></Col>
             </Element>
