@@ -16,7 +16,7 @@ class button extends Component{
 	constructor(props){
 	    super(props);
 	    this.state={
-	      disabled:false
+
 	    };
 	    this.logFormDataToConsole = this.logFormDataToConsole.bind(this);
 	}
@@ -26,13 +26,15 @@ class button extends Component{
 	}
 
 	render(){
+		
 		const recipient = `mailto:${this.props.email}`;
 		const subject = `?subject=Interested%20Client`;
 		const body = `&body=${this.props.formValues.message}`;
+
 		return(
 			<form action={`${recipient}${subject}${body}`}>
-    <input type="submit" value="Contact Me!"  onClick={this.logFormDataToConsole} />
-</form>
+			    <input type="submit" value="Contact Me!"  onClick={this.logFormDataToConsole} />
+			</form>
 			
 		);
 	}

@@ -103,6 +103,7 @@ class App extends Component {
                   textarea={true}
                   onChange={(event) => this.updateBox('message', event.target.value)} 
                   value={this.state.message} />
+
                 <Button formValues={this.state} email = "alexgue26@hotmail.com" 
                 />
               </Col>
@@ -114,11 +115,11 @@ class App extends Component {
             <Element id="payment">
               <Col lg={2} xs={0}> </Col>
               <Col lg={8} xs={12}> 
+                {/* Stripe KEY is a test key given in stripe website.*/}
                 <StripeCheckout
                   token={this.onToken}
                   stripeKey="pk_test_TYooMQauvdEDq54NiTphI7jx"
                 />
- 
               </Col>
               <Col lg={2} xs={0}></Col>
             </Element>

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 
 const box = (props) => (
-	<div>
-		<label> {props.label} </label>
+	<div style={{marginBottom:"5px"}}>
+		<label style={{paddingRight: "5px", width: "70px"}}> {props.label} </label>
 		<input
 		onChange={props.onChange}
 		type={props.textarea ? 'textarea' : 'text'}
